@@ -1,11 +1,9 @@
 package mx.com.app.mockito.test.practice.services;
 
-import mx.com.app.mockito.test.data_models.RepositoryData;
 import mx.com.app.mockito.test.models.Exam;
 import mx.com.app.mockito.test.repositories.ExamRepository;
 import mx.com.app.mockito.test.repositories.QuestionsRepository;
 import mx.com.app.mockito.test.services.ExamServiceImpl;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,17 +15,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
-import static mx.com.app.mockito.test.data_models.RepositoryData.EXAM;
 import static mx.com.app.mockito.test.data_models.RepositoryData.EXAMS_DATA_ID_NULL;
 import static mx.com.app.mockito.test.data_models.RepositoryData.MATHEMATICS_NAME;
 import static mx.com.app.mockito.test.data_models.RepositoryData.QUESTIONS_DATA;
 import static mx.com.app.mockito.test.data_models.RepositoryData.UUID_446;
-import static mx.com.app.mockito.test.data_models.RepositoryData.examsData;
+import static mx.com.app.mockito.test.data_models.RepositoryData.EXAMS_DATA;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -74,7 +69,7 @@ public class ExamServiceImplTest {
     @Test
     @DisplayName("find exam by name test")
     void findExamByName() {
-        when(examRepository.findAll()).thenReturn(examsData);
+        when(examRepository.findAll()).thenReturn(EXAMS_DATA);
         Optional<Exam> examservice = examService.findExamByName("Mathematics");
 
         assumingThat(examservice.isPresent(), () -> {
@@ -88,7 +83,7 @@ public class ExamServiceImplTest {
     @Test
     @DisplayName("find exam by name and then assign questions")
     void findQuestionsExam() {
-        when(examRepository.findAll()).thenReturn(examsData);
+        when(examRepository.findAll()).thenReturn(EXAMS_DATA);
         when(questionsRepository.findQuestionsByExamId(UUID_446)).thenReturn(QUESTIONS_DATA);
 
         var exam = examService.findExamByNameWithQuestions(MATHEMATICS_NAME);
@@ -101,7 +96,7 @@ public class ExamServiceImplTest {
     @Test
     @DisplayName("find exam by name and then assign questions with verify")
     void findQuestionsExamVerify() {
-        when(examRepository.findAll()).thenReturn(examsData);
+        when(examRepository.findAll()).thenReturn(EXAMS_DATA);
         when(questionsRepository.findQuestionsByExamId(UUID_446)).thenReturn(QUESTIONS_DATA);
 
         var exam = examService.findExamByNameWithQuestions(MATHEMATICS_NAME);
